@@ -1,0 +1,22 @@
+{
+    "name": "main-website",
+    "version": "1.0.0",
+    "description": "The main website for flameys.net",
+    "main": "server.js",
+    "scripts": {
+        "start": "node server.js"
+    },
+    "keywords": [],
+    "author": "Minecat",
+    "license": "GPL-3.0-only",
+    "installPath": "/home/minecat300/flameys.net/mainSite/",
+    "dependencies": {
+        "body-parser": "^1.20.2",
+        "cors": "^2.8.5",
+        "express": "^4.18.4"
+    },
+    "nginxConfig": {
+        "uri": "/",
+        "port": 8080
+    }
+}
