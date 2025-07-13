@@ -1,6 +1,7 @@
 const fs = require("fs");
 const https = require("https");
 const crypto = require('crypto');
+const path = require("path");
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
@@ -101,7 +102,7 @@ function createServer(PORT, ipLogPath, blockedIpsPath, SSlPath, publicFolder, us
     app.use(express.static(publicFolder));
 
     app.get("/", (req, res) => {
-    res.sendFile(path.join(publicFolder, "index.html"));
+        res.sendFile(path.join(publicFolder, "index.html"));
     });
 
     app.post("/ping", (req, res) => {
