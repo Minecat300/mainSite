@@ -100,15 +100,9 @@ function createServer(PORT, ipLogPath, blockedIpsPath, SSlPath, publicFolder, us
 
     app.use(express.static(publicFolder));
 
-    /*
     app.get("/", (req, res) => {
-        if (htmlFile != undefined && htmlFile != "") {
-            res.send(htmlFile);
-        } else {
-            res.status(404).send("Not Found");
-        }
+    res.sendFile(path.join(publicFolder, "index.html"));
     });
-    */
 
     app.post("/ping", (req, res) => {
         return res.status(200).json({ message: "Ping recived" });
