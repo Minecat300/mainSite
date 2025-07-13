@@ -77,7 +77,7 @@ function setupClient(app, ipLogPath, blockedIpsPath) {
     });
 }
 
-function createServer(PORT, ipLogPath, blockedIpsPath, SSlPath, publicFolder, useHttps = true) {
+function createServer(PORT, ipLogPath, blockedIpsPath, SSlPath, htmlFile, useHttps = true) {
     const app = express();
 
     let options = {};
@@ -98,12 +98,12 @@ function createServer(PORT, ipLogPath, blockedIpsPath, SSlPath, publicFolder, us
 
     setupClient(app, ipLogPath, blockedIpsPath);
 
-    const absPublicFolder = path.resolve(publicFolder);
-
-    app.use(express.static(absPublicFolder));
-
     app.get("/", (req, res) => {
-        res.sendFile(path.join(absPublicFolder, "index.html"));
+        if (htmlFile != undefined && htmlFile != "") {
+            res.send(htmlFile);
+        } else {
+            res.status(404).send("Not Found");
+        }
     });
 
     app.post("/ping", (req, res) => {
