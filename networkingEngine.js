@@ -98,7 +98,7 @@ function createServer(PORT, ipLogPath, blockedIpsPath, SSlPath, publicFolder, us
 
     setupClient(app, ipLogPath, blockedIpsPath);
 
-    app.use(express.static(publicFolder));
+    app.use(express.static(path.join(__dirname, publicFolder)));
 
     /*
     app.get("/", (req, res) => {
