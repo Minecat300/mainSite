@@ -16,7 +16,7 @@
         "express": "^4.18.4"
     },
     "nginxConfig": {
-        "uri": "/",
+        "uri": "",
         "port": 8080
     }
 }
