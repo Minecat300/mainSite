@@ -89,7 +89,6 @@ function createServer(PORT, ipLogPath, blockedIpsPath, SSlPath, publicFolder, us
         };
     }
 
-    //app.use(cors());
     app.use(bodyParser.json());
 
     app.use((err, req, res, next) => {
@@ -99,14 +98,16 @@ function createServer(PORT, ipLogPath, blockedIpsPath, SSlPath, publicFolder, us
 
     setupClient(app, ipLogPath, blockedIpsPath);
 
-    app.use(express.static(publicFolder));
+    const absPublicFolder = path.resolve(publicFolder);
+
+    app.use(express.static(absPublicFolder));
 
     app.get("/", (req, res) => {
-        res.sendFile(path.join(publicFolder, "index.html"));
+        res.sendFile(path.join(absPublicFolder, "index.html"));
     });
 
     app.post("/ping", (req, res) => {
-        return res.status(200).json({ message: "Ping recived" });
+        return res.status(200).json({ message: "Ping received" });
     });
 
     if (useHttps) {
