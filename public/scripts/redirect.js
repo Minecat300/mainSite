@@ -4,9 +4,7 @@ const loadPage = async () => {
     const path = `pages/${route || 'home'}.html`;
 
     try {
-    const res = await fetch(path);
-    if (!res.ok) throw new Error('Not found');
-    const html = await res.text();
+    const html = await getHtml(path)
     document.getElementById('content').innerHTML = html;
     await loadSection("header", "/sub-pages/header.html");
     await loadSection("footer", "/sub-pages/footer.html");
@@ -14,8 +12,7 @@ const loadPage = async () => {
     executeScriptsFromContent(document.getElementById('content'));
     document.title = "Flameys - " + route;
     } catch {
-    const fallback = await fetch('pages/404.html');
-    document.getElementById('content').innerHTML = await fallback.text();
+    document.getElementById('content').innerHTML = await getHtml('pages/404.html');
     await loadSection("header", "/sub-pages/header.html");
     await loadSection("footer", "/sub-pages/footer.html");
     moveStylesAndLinksToHead();
@@ -68,6 +65,16 @@ function executeScriptsFromContent(container) {
     });
 }
 
+async function getHtml(url) {
+    if (cachedHtml[url]) {return cachedHtml[url];}
+    const res = await fetch(url);
+    if (!res.ok) {throw new Error('Not found');}
+    const html = await res.text();
+    cachedHtml[url] = html;
+    return html;
+}
+
+const cachedHtml = {}
 
 window.addEventListener('hashchange', loadPage);
 window.addEventListener('DOMContentLoaded', loadPage);

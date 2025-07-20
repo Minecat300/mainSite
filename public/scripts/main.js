@@ -6,7 +6,6 @@ window.initMain ??= async () => {
     }
 
     async function runMain() {
-
         const copyright = document.getElementById("copyright");
         if (!copyright) return console.error("Missing #copyright element!");
         copyright.innerHTML = `© ${new Date().getFullYear()} Minecat`;
@@ -16,12 +15,18 @@ window.initMain ??= async () => {
         const stickyOffset = header.offsetTop;
         const triggerPoint = 30;
 
-        window.addEventListener('scroll', () => {
-            if (window.pageYOffset > stickyOffset + triggerPoint) {
+        const updateScrollState = () => {
+            if (window.pageYOffset > triggerPoint) {
                 document.body.classList.add('header-stuck');
             } else {
                 document.body.classList.remove('header-stuck');
             }
+        };
+
+        window.addEventListener('scroll', updateScrollState);
+
+        requestAnimationFrame(() => {
+            setTimeout(updateScrollState, 0);
         });
     }
 };
