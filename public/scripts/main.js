@@ -1,5 +1,29 @@
-window.initMain ??= () => {
-    const copyright = document.getElementById("copyright");
-    copyright.innerHTML = `© ${new Date().getFullYear()} Minecat`;
-}
+window.initMain ??= async () => {
+    if (document.readyState === "loading") {
+        window.addEventListener('DOMContentLoaded', runMain);
+    } else {
+        await runMain();
+    }
+
+    async function runMain() {
+
+        const copyright = document.getElementById("copyright");
+        if (!copyright) return console.error("Missing #copyright element!");
+        copyright.innerHTML = `© ${new Date().getFullYear()} Minecat`;
+
+        const header = document.getElementById('header');
+        if (!header) return console.error("Missing #header element!");
+        const stickyOffset = header.offsetTop;
+        const triggerPoint = 30;
+
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > stickyOffset + triggerPoint) {
+                document.body.classList.add('header-stuck');
+            } else {
+                document.body.classList.remove('header-stuck');
+            }
+        });
+    }
+};
+
 initMain();

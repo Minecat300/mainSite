@@ -8,12 +8,16 @@ const loadPage = async () => {
     if (!res.ok) throw new Error('Not found');
     const html = await res.text();
     document.getElementById('content').innerHTML = html;
+    loadSection("header", "/sub-pages/header.html");
+    loadSection("footer", "/sub-pages/footer.html");
     moveStylesAndLinksToHead();
     executeScriptsFromContent(document.getElementById('content'));
     document.title = "Flameys - " + route;
     } catch {
     const fallback = await fetch('pages/404.html');
     document.getElementById('content').innerHTML = await fallback.text();
+    loadSection("header", "/sub-pages/header.html");
+    loadSection("footer", "/sub-pages/footer.html");
     moveStylesAndLinksToHead();
     executeScriptsFromContent(document.getElementById('content'));
     document.title = "Flameys - 404";
