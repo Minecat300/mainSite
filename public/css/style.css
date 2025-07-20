@@ -1,4 +1,135 @@
 body {
-    background-color: black;
+    background-color: #122940;
     color: white;
+    margin: 0px;
+}
+
+header {
+    background-color: #0a1724;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    margin-bottom: 0px;
+    transition: margin-bottom 0.5s;
+}
+
+footer {
+    background-color: #0a1724;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+}
+
+footer p {
+    margin: 30px;
+}
+
+button {
+    background-color: #ff6933;
+    border: 0px;
+    border-radius: 10px;
+    padding: 10px;
+    color: white;
+    text-decoration-line: none;
+    font-weight: 800;
+}
+
+button:hover {
+    background-color: #ff875c;
+    cursor: pointer;
+}
+
+hr {
+    width: 90%;
+    background-color: #0e2032;
+    border: #0e2032 4px solid;
+    border-radius: 10px;
+}
+
+#content {
+    display: flex;
+    flex-direction: column;
+    min-width: fit-content;
+    min-height: 100vh;
+}
+
+.loadingDiv {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.main {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    font-size: 25px;
+    flex: 1;
+}
+
+.icon {
+    padding: 10px;
+}
+
+.icon img {
+    height: 90px;
+    transition: height 0.5s;
+}
+
+.navLinks {
+    display: flex;
+    width: 100%;
+}
+
+.navLinks ul {
+    list-style: none;
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+body.header-stuck .icon img {
+    height: 60px;
+}
+
+body.header-stuck nav ul {
+    padding-inline-start: 10px;
+}
+
+body.header-stuck header {
+    margin-bottom: 30px;
+}
+
+nav ul {
+    padding-inline-start: 40px;
+    transition: padding-inline-start 0.5s;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    font-size: x-large;
+    border: #ff875c solid 3px;
+    border-radius: 15px;
+    padding: 10px;
+    margin-right: 20px;
+}
+
+.socialLinks {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    padding-left: 20px;
+}
+
+.socialLinks img {
+    margin: 5px;
+    width: 40px;
 }
