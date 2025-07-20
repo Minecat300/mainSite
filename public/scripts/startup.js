@@ -20,8 +20,8 @@ async function fetchAndCache(url) {
     return html;
 }
 
-function loadSection(id, file) {
-    const html = pageCache[file];
+async function loadSection(id, file) {
+    const html = await fetchAndCache(file);
     const el = document.getElementById(id);
     if (el) el.innerHTML = html;
 }
