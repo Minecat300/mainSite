@@ -1,11 +1,106 @@
+:root {
+    --main-dark-color:        #14141e;    /*old #0a1724*/
+    --main-element-color:     #1d1d30;    /*old #0e2032*/
+    --main-base-color:        #262640;    /*old #122940*/
+    --highlight-base-color:   #ff6933;
+    --highlight-light-color:  #ff875c;
+    --highlight-action-color: #00FFFF;
+    --text-main-color:        #FFFFFF;
+    --text-button-color:      #FFFFFF;
+    --icon-main-color:        #FFFFFF;
+    --vh: 100%;
+}
+
+@media only screen and (max-width: 1000px) {
+    html {
+        font-size: 6px !important;
+    }
+}
+
+@media only screen and (max-width: 100vh) {
+    .footerText {
+        display: none;
+    }
+    .footerTextMobile {
+        display: block !important;
+        margin-top: 10px !important;
+    }
+
+    footer {
+        flex-direction: column-reverse;
+    }
+    footer p {
+        margin: 5px !important;
+    }
+    .socialLinks {
+        padding: 0px !important;
+    }
+
+    header {
+        position: relative !important;
+        margin: 0px !important;
+        justify-content: space-between;
+    }
+    .navLinks {
+        display: none !important;
+    }
+    .icon img {
+        height: 60px !important;
+    }
+    .hamburger {
+        display: block !important;
+    }
+
+    .githubProject {
+        width: 200px !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+    .githubProject p {
+        margin-bottom: 20px !important;
+        font-size: 3rem !important;
+    }
+    .gitProContent {
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+    .gitProText {
+        align-items: center !important;
+        justify-content: center !important;
+        margin: 0px !important;
+        margin-top: 20px !important;
+    }
+    .gitProText p {
+        font-size: 2rem !important;
+    }
+}
+
+@keyframes blink {
+    0% { background-color: var(--highlight-action-color); }
+    100% { background-color: var(--highlight-light-color); }
+}
+
+html {
+    font-size: 10px;
+}
+
 body {
-    background-color: #122940;
-    color: white;
+    background-color: var(--main-dark-color);
+    color: var(--text-main-color);
     margin: 0px;
+    font-family: Ubuntu;
+    font-size: 2.5rem;
+}
+
+body.no-scroll {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
 }
 
 header {
-    background-color: #0a1724;
+    background-color: var(--main-dark-color);
     display: flex;
     align-items: center;
     width: 100%;
@@ -17,7 +112,7 @@ header {
 }
 
 footer {
-    background-color: #0a1724;
+    background-color: var(--main-dark-color);
     display: flex;
     align-items: center;
     width: 100%;
@@ -26,36 +121,61 @@ footer {
 
 footer p {
     margin: 30px;
+    font-size: 2rem;
 }
 
 button {
-    background-color: #ff6933;
+    background-color: var(--highlight-base-color);
     border: 0px;
     border-radius: 10px;
     padding: 10px;
-    color: white;
+    color: var(--text-button-color);
     text-decoration-line: none;
     font-weight: 800;
-    transition: background-color 0.2s;
+    transition: background-color 0.2s, transform 0.1s ease, outline-color 0.2s;
 }
 
 button:hover {
-    background-color: #ff875c;
+    background-color: var(--highlight-light-color);
     cursor: pointer;
+}
+
+button, a, .hamburger {
+    -webkit-tap-highlight-color: transparent;
+    box-sizing: border-box;
+}
+
+button:active {
+    transform: scale(0.97);
+    outline: 3px solid var(--highlight-action-color);
+    outline-offset: -3px;
+}
+
+.hamburger:active span {
+    animation: blink 0.4s ease;
+}
+
+a {
+    transition: border-color 0.2s;
+}
+
+a:active {
+    border-color: var(--highlight-action-color) !important;
 }
 
 hr {
     width: 90%;
-    background-color: #0e2032;
-    border: #0e2032 4px solid;
+    background-color: var(--main-element-color);
+    border: var(--main-element-color) 4px solid;
     border-radius: 10px;
 }
 
 #content {
+    background-color: var(--main-base-color);
     display: flex;
     flex-direction: column;
     min-width: fit-content;
-    min-height: 100vh;
+    min-height: calc(var(--vh, 1vh) * 100);
 }
 
 .loadingDiv {
@@ -69,8 +189,8 @@ hr {
     display: flex;
     align-items: center;
     flex-direction: column;
-    font-size: 25px;
     flex: 1;
+    text-align: center;
 }
 
 .icon {
@@ -80,6 +200,74 @@ hr {
 .icon img {
     height: 90px;
     transition: height 0.5s;
+}
+
+.hamburger {
+    cursor: pointer;
+    width: 35px;
+    height: 42px;
+    position: relative;
+    display: none;
+    z-index: 1002;
+    margin-right: 20px;
+}
+
+.hamburger span {
+    background-color: var(--highlight-light-color);
+    display: block;
+    height: 4px;
+    margin: 7px 0;
+    transition: 0.3s ease;
+    border-radius: 2px;
+}
+
+.hamNav {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: var(--main-element-color);
+    width: 200px;
+    height: calc(var(--vh, 1vh) * 100);
+    transform: translateX(-100%);
+    transition: 0.3s ease;
+    z-index: 1001;
+}
+
+.menu-toggle {
+    display: none;
+}
+
+.menu-toggle:checked ~ .hamNav {
+    transform: translateX(0);
+}
+
+.menu-toggle:checked + .hamburger span:nth-child(1) {
+    transform: rotate(45deg) translate(8px, 8px);
+}
+
+.menu-toggle:checked + .hamburger span:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-toggle:checked + .hamburger span:nth-child(3) {
+    transform: rotate(-45deg) translate(8px, -8px);
+}
+
+.overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 1000;
+    width: 100vw;
+    height: calc(var(--vh, 1vh) * 100);
+}
+
+.menu-toggle:checked ~ .overlay {
+    opacity: 1;
+    pointer-events: auto;
 }
 
 .navLinks {
@@ -94,11 +282,37 @@ hr {
     width: 100%;
 }
 
+.hamNav {
+    display: flex;
+}
+
+.hamNav ul {
+    list-style: none;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+.hamNav ul li a {
+    text-decoration: none;
+    color: var(--text-main-color);
+    font-weight: bold;
+    border: var(--highlight-light-color) solid 3px;
+    border-radius: 15px;
+    padding: 10px;
+    margin-bottom: 20px !important;
+}
+
+.hamNav ul li {
+    margin: 10px;
+    margin-bottom: 30px !important;
+}
+
 body.header-stuck .icon img {
     height: 60px;
 }
 
-body.header-stuck nav ul {
+body.header-stuck .navLinks ul {
     padding-inline-start: 10px;
 }
 
@@ -106,17 +320,16 @@ body.header-stuck header {
     margin-bottom: 30px;
 }
 
-nav ul {
+.navLinks ul {
     padding-inline-start: 40px;
     transition: padding-inline-start 0.5s;
 }
 
-nav ul li a {
+.navLinks ul li a {
     text-decoration: none;
-    color: white;
+    color: var(--text-main-color);
     font-weight: bold;
-    font-size: x-large;
-    border: #ff875c solid 3px;
+    border: var(--highlight-light-color) solid 3px;
     border-radius: 15px;
     padding: 10px;
     margin-right: 20px;
@@ -130,30 +343,41 @@ nav ul li a {
     padding-left: 20px;
 }
 
-.socialLinks img {
+.socialLinks svg {
     margin: 5px;
     width: 40px;
+    height: 40px;
+    fill: var(--icon-main-color)!important;
+}
+
+.footerTextMobile {
+    display: none;
+    margin: 20px;
+    margin-bottom: 0px;
 }
 
 .githubProList {
     display: flex;
+    flex-wrap: wrap;
     flex-direction: row;
     margin-bottom: 30px;
+    justify-content: center;
 }
 
 .githubProject {
     display: flex;
     flex-direction: column;
-    background-color: #0e2032;
+    background-color: var(--main-element-color);
     border-radius: 40px;
     padding: 30px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
     width: 400px;
+    margin: 30px;
 }
 
 .githubProject p {
     margin: 0px;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 }
 
 .gitProContent {
@@ -162,17 +386,18 @@ nav ul li a {
 }
 
 .gitProImg {
-    background-color: #122940;
-    aspect-ratio: 1/1;
+    background-color: var(--main-base-color);
     border-radius: 20px;
     height: 150px;
-    padding: 5px;
+    min-width: 150px;
+    max-width: 150px;
+    overflow: hidden;
 }
 
 .gitProImg img {
+    width: 100%;
     height: 100%;
     object-fit: cover;
-    overflow: hidden;
 }
 
 .gitProText {
@@ -184,7 +409,7 @@ nav ul li a {
 }
 
 .gitProText p {
-    font-size: 15px;
+    font-size: 1.5rem;
 }
 
 .gitProButtons {
@@ -193,5 +418,6 @@ nav ul li a {
 }
 
 .gitProButtons a {
-    margin-right: 15px;
+    margin-left: 7.5px;
+    margin-right: 7.5px;
 }

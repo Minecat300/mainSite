@@ -20,11 +20,31 @@ async function fetchAndCache(url) {
     return html;
 }
 
-async function loadSection(id, file) {
+async function loadSectionToBuffer(container, id, file) {
     const html = await fetchAndCache(file);
-    const el = document.getElementById(id);
-    if (el) el.innerHTML = html;
+    const target = container.querySelector(`#${id}`);
+    if (target) {
+        target.innerHTML = html;
+    } else {
+        const wrapper = document.createElement(id === 'header' ? 'header' : 'footer');
+        wrapper.id = id;
+        wrapper.innerHTML = html;
+        if (id === 'header') {
+            container.prepend(wrapper);
+        }
+        if (id === 'footer') {
+            container.appendChild(wrapper);
+        }
+    }
 }
+
+function setVh() {
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+}
+
+window.addEventListener('resize', setVh);
+window.addEventListener('load', setVh);
 
 (async () => {
     await Promise.all([

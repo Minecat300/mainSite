@@ -1,0 +1,22 @@
+[
+    {
+        "name": "Terraria Remake",
+        "icon": "/assets/github/terraria.png",
+        "description": "A remake of Terraria in JavaScript",
+        "buttons": [
+            {"text": "Play", "link": "https://minecat300.github.io/Terraria_remake/", "replacePage": false},
+            {"text": "Github", "link": "https://github.com/Minecat300/Terraria_remake", "replacePage": false},
+            {"text": "Docs", "link": "/#/docs/Terraria_remake", "replacePage": true}
+        ]
+    },
+
+    {
+        "name": "Package manager for OC",
+        "icon": "/assets/github/openComputers.png",
+        "description": "A package manager for the OpenComputers mod for Minecraft",
+        "buttons": [
+            {"text": "Github", "link": "https://github.com/Minecat300/MC-OC-installer", "replacePage": false},
+            {"text": "Docs", "link": "/#/docs/OCUin", "replacePage": true}
+        ]
+    }
+]
