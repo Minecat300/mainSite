@@ -17,6 +17,7 @@
     },
     "nginx": {
         "service": {
+            "name": "main-website",
             "port": 8080,
             "uri": "",
             "https": true,
