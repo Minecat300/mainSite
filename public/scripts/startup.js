@@ -9,19 +9,16 @@ if (location.hash.includes('index.html')) {
     history.replaceState(null, '', newUrl);
 }
 
-const pageCache = {};
+const fetchCache = {};
 
-async function fetchAndCache(url) {
-    if (pageCache[url]) return pageCache[url];
-
-    const res = await fetch(url);
+async function fetchPage(url) {
+    const res = await fetchAndCache(url);
     const html = await res.text();
-    pageCache[url] = html;
     return html;
 }
 
 async function loadSectionToBuffer(container, id, file) {
-    const html = await fetchAndCache(file);
+    const html = await fetchPage(file);
     const target = container.querySelector(`#${id}`);
     if (target) {
         target.innerHTML = html;
@@ -38,6 +35,15 @@ async function loadSectionToBuffer(container, id, file) {
     }
 }
 
+async function fetchAndCache(url) {
+    if (fetchCache[url]) return fetchCache[url].clone();
+
+    const res = await fetch(url);
+    if (!res.ok) {throw new Error('Not found');}
+    fetchCache[url] = res.clone();
+    return res;
+}
+
 function setVh() {
     let vh = window.innerHeight * 0.01;
     document.documentElement.style.setProperty('--vh', `${vh}px`);
@@ -45,10 +51,3 @@ function setVh() {
 
 window.addEventListener('resize', setVh);
 window.addEventListener('load', setVh);
-
-(async () => {
-    await Promise.all([
-        fetchAndCache("/sub-pages/header.html"),
-        fetchAndCache("/sub-pages/footer.html")
-    ]); 
-})();

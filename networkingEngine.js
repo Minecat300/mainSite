@@ -41,8 +41,13 @@ async function fetchIpInfo(ip) {
 
 function setupClient(app, ipLogPath, blockedIpsPath) {
     app.use(async (req, res, next) => {
-        const clientIP = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
+        const clientIPRaw = req.headers["x-forwarded-for"] || req.socket.remoteAddress || "";
         const clientAgent = req.headers["user-agent"];
+
+        let clientIP = clientIPRaw.split(",")[0].trim();
+        if (clientIP.startsWith("::ffff:")) {
+            clientIP = clientIP.slice(7);
+        }
 
         loggedIps = getFromFile(ipLogPath, "{}");
         blockedIps = getFromFile(blockedIpsPath);
@@ -50,8 +55,7 @@ function setupClient(app, ipLogPath, blockedIpsPath) {
         if (!loggedIps.hasOwnProperty(clientIP)) {
             console.log("Client IP:", clientIP);
 
-            const slicedIp = clientIP.slice(7);
-            const ipInfo = await fetchIpInfo(slicedIp);
+            const ipInfo = await fetchIpInfo(clientIP);
 
             loggedIps[clientIP] = {location: {}, agent: {}};
             loggedIps[clientIP].location = ipInfo;

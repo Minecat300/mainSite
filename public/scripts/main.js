@@ -6,11 +6,12 @@ window.initMain ??= async () => {
     }
 
     async function runMain() {
+        console.log("code ran")
         await loadProjects();
     }
 
     async function loadJSON(path) {
-        const response = await fetch(path);
+        const response = await fetchAndCache(path);
         if (!response.ok) throw new Error(`Failed to load JSON from ${path}`);
         return await response.json();
     }

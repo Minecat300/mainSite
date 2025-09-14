@@ -9,7 +9,7 @@ const loadPage = async () => {
     document.body.classList.remove('no-scroll');
 
     try {
-        const html = await getHtml(path);
+        const html = await fetchPage(path);
         buffer.innerHTML = html;
 
         await loadSectionToBuffer(buffer, "header", "/sub-pages/header.html");
@@ -17,14 +17,14 @@ const loadPage = async () => {
 
         moveStylesAndLinksToHeadFrom(buffer);
         await runInlineSVGs(buffer); 
-        document.title = "Flameys - " + route;
+        document.title = "Flameys - " + route.split('/').pop();
 
         content.innerHTML = buffer.innerHTML;
         buffer.remove();
         loadExtras();
         executeScriptsFromContent(content);
     } catch {
-        const html = await getHtml('pages/404.html');
+        const html = await fetchPage('pages/404.html');
         buffer.innerHTML = html;
 
         await loadSectionToBuffer(buffer, "header", "/sub-pages/header.html");
@@ -91,15 +91,6 @@ function executeScriptsFromContent(container) {
     });
 }
 
-async function getHtml(url) {
-    if (cachedHtml[url]) {return cachedHtml[url];}
-    const res = await fetch(url);
-    if (!res.ok) {throw new Error('Not found');}
-    const html = await res.text();
-    cachedHtml[url] = html;
-    return html;
-}
-
 async function runInlineSVGs(container = document) {
     const images = container.querySelectorAll('img[is="inline-svg"]');
     
@@ -156,7 +147,9 @@ function loadExtras() {
     });
 
     const menuToggle = document.getElementById("menu");
-    const overlay = document.querySelector(".overlay");
+    const settingsToggle = document.getElementById("settings-menu");
+    const overlay1 = document.querySelector(".overlay1");
+    const overlay2 = document.querySelector(".overlay2");
 
     function toggleScrollock(locked) {
         if (locked) {
@@ -171,13 +164,27 @@ function loadExtras() {
         toggleScrollock(menuToggle.checked);
     });
 
-    overlay.addEventListener('click', () => {
+    settingsToggle.addEventListener('change', () => {
+        toggleScrollock(settingsToggle.checked);
+        if (settingsToggle.checked) {
+            document.getElementById("settings-div").innerHTML = "";
+            loadSectionToBuffer(document, "settings-div", "/sub-pages/settings.html");
+        } else {
+            document.getElementById("settings-div").innerHTML = "";
+        }
+    });
+
+    overlay1.addEventListener('click', () => {
         menuToggle.checked = false;
         toggleScrollock(false);
     });
+    
+    overlay2.addEventListener('click', () => {
+        settingsToggle.checked = false;
+        toggleScrollock(false)
+        document.getElementById("settings-div").innerHTML = "";
+    });
 }
-
-const cachedHtml = {}
 
 window.addEventListener('hashchange', loadPage);
 window.addEventListener('DOMContentLoaded', loadPage);

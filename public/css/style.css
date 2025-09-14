@@ -2,6 +2,7 @@
     --main-dark-color:        #14141e;    /*old #0a1724*/
     --main-element-color:     #1d1d30;    /*old #0e2032*/
     --main-base-color:        #262640;    /*old #122940*/
+    --main-light-color:       #6565a0;
     --highlight-base-color:   #ff6933;
     --highlight-light-color:  #ff875c;
     --highlight-action-color: #00FFFF;
@@ -50,6 +51,9 @@
     .hamburger {
         display: block !important;
     }
+    #settings {
+        display: none;
+    }
 
     .githubProject {
         width: 200px !important;
@@ -83,6 +87,7 @@
 
 html {
     font-size: 10px;
+    scrollbar-color: var(--main-light-color) var(--main-dark-color);
 }
 
 body {
@@ -124,6 +129,53 @@ footer p {
     font-size: 2rem;
 }
 
+form {
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    align-items: center;
+    border-radius: 30px;
+    border: var(--main-element-color) solid 5px;
+    padding: 20px;
+    margin: 30px;
+}
+
+form button {
+    width: fit-content !important;
+    margin: 20px;
+}
+
+form label {
+    font-weight: bold;
+}
+
+form input {
+    text-align: center;
+}
+
+input {
+    width: 80%;
+    background-color: var(--main-element-color);
+    border: var(--main-dark-color) solid 3px;
+    color: var(--text-main-color);
+    font-family: Ubuntu;
+    border-radius: 10px;
+    padding: 5px;
+    margin: 10px;
+}
+
+input:focus {
+    border-color: var(--highlight-action-color);
+    outline: none;
+}
+
+input::placeholder {
+    color: var(--main-light-color);
+    font-family: Ubuntu;
+    justify-content: center;
+}
+
 button {
     background-color: var(--highlight-base-color);
     border: 0px;
@@ -132,7 +184,7 @@ button {
     color: var(--text-button-color);
     text-decoration-line: none;
     font-weight: 800;
-    transition: background-color 0.2s, transform 0.1s ease, outline-color 0.2s;
+    transition: background-color 0.2s, transform 0.1s ease, outline-color 0.1s;
 }
 
 button:hover {
@@ -156,7 +208,7 @@ button:active {
 }
 
 a {
-    transition: border-color 0.2s;
+    transition: border-color 0.1s;
 }
 
 a:active {
@@ -253,7 +305,7 @@ hr {
     transform: rotate(-45deg) translate(8px, -8px);
 }
 
-.overlay {
+.overlay1, .overlay2 {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
     background-color: rgba(0, 0, 0, 0.5);
@@ -265,9 +317,41 @@ hr {
     height: calc(var(--vh, 1vh) * 100);
 }
 
-.menu-toggle:checked ~ .overlay {
+.menu-toggle:checked ~ .overlay1 {
     opacity: 1;
     pointer-events: auto;
+}
+
+.settings-toggle:checked ~ .overlay2 {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.settings-toggle:checked ~ .settings-popup {
+    display: flex;
+}
+
+.settings-popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1003;
+    background-color: var(--main-base-color);
+    padding: 10px;
+    border-radius: 40px;
+    min-width: 500px;
+    max-width: calc(100vw - 180px);
+    height: calc(calc(var(--vh, 1vh) * 100) - 180px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    overflow: auto;
+}
+
+#settings-div {
+    display: flex;
+    width: 100%;
+    height: 100%;
 }
 
 .navLinks {
@@ -308,6 +392,10 @@ hr {
     margin-bottom: 30px !important;
 }
 
+body.header-stuck #settings {
+    margin-right: 5px;
+}
+
 body.header-stuck .icon img {
     height: 60px;
 }
@@ -333,6 +421,40 @@ body.header-stuck header {
     border-radius: 15px;
     padding: 10px;
     margin-right: 20px;
+}
+
+.settings-toggle {
+    display: none;
+}
+
+#settings {
+    height: 60px;
+    min-width: 60px;
+    margin-right: 20px;
+    transition: margin 0.5s;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+#settings:hover svg {
+    transform: rotate(120deg);
+}
+
+#settings svg {
+    fill: none!important;
+    height: 60px;
+    width: auto;
+    transition: transform 0.3s ease;
+}
+
+#settings svg circle, #settings svg path {
+    stroke: var(--highlight-light-color)!important;
+    stroke-width: 1.5px;
+    transition: stroke 0.1s;
+}
+
+#settings:active svg circle, #settings:active svg path {
+    stroke: var(--highlight-action-color)!important;
 }
 
 .socialLinks {
