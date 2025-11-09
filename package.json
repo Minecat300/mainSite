@@ -20,7 +20,7 @@
             "name": "main-website",
             "port": 8080,
             "uri": "",
-            "https": true,
+            "https": false,
             "servers": ["flameys.net"]
         },
         "flameys.net": {

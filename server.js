@@ -6,4 +6,4 @@ const { createServer, writeToFile, getFromFile, hashSHA512 } = require("./networ
 
 const PORT = 8080;
 
-const app = createServer(PORT, "ipLog.log", "blockedIps.json", "/etc/letsencrypt/live/flameys.net", "public");
+const app = createServer(PORT, "ipLog.log", "blockedIps.json", null, "public", false);
